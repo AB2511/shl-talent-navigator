@@ -1,0 +1,170 @@
+[
+  {
+    "id": "vague_query_1",
+    "query": "Need hiring assessment",
+    "expected_state": "clarification",
+    "expected_assessments_count": 0,
+    "description": "Vague query should trigger clarification"
+  },
+  {
+    "id": "specific_graduate_1",
+    "query": "Need assessment for graduate software engineers",
+    "expected_state": "recommendation",
+    "expected_constraints": {
+      "job_levels": ["Graduate"],
+      "role": "technical"
+    },
+    "expected_test_types": ["A", "K"],
+    "description": "Specific query for graduate technical role"
+  },
+  {
+    "id": "duration_constraint_1",
+    "query": "Need graduate role assessment under 30 minutes",
+    "expected_state": "recommendation",
+    "expected_constraints": {
+      "job_levels": ["Graduate"],
+      "max_duration": 30
+    },
+    "min_assessments": 1,
+    "description": "Duration constraint should filter results"
+  },
+  {
+    "id": "remote_testing_1",
+    "query": "Looking for remote cognitive assessment for mid-level professionals",
+    "expected_state": "recommendation",
+    "expected_constraints": {
+      "job_levels": ["Mid-Professional"],
+      "remote_testing": true,
+      "test_types": ["A"]
+    },
+    "description": "Remote testing requirement"
+  },
+  {
+    "id": "personality_leadership_1",
+    "query": "Need personality assessment for leadership roles",
+    "expected_state": "recommendation",
+    "expected_constraints": {
+      "test_types": ["P"],
+      "skills": ["leadership"]
+    },
+    "min_assessments": 1,
+    "description": "Personality test for leadership"
+  },
+  {
+    "id": "refinement_1",
+    "conversation": [
+      {"role": "user", "content": "Need cognitive assessments"},
+      {"role": "assistant", "content": "Here are cognitive assessments..."},
+      {"role": "user", "content": "Show me shorter alternatives under 20 minutes"}
+    ],
+    "expected_state": "refinement",
+    "expected_constraints": {
+      "max_duration": 20
+    },
+    "description": "Refinement with duration constraint"
+  },
+  {
+    "id": "comparison_1",
+    "conversation": [
+      {"role": "user", "content": "Need leadership assessments"},
+      {"role": "assistant", "content": "I recommend: Leadership Report (ID: shl-leadership-report) and Managerial Assessment (ID: shl-managerial-assessment)"},
+      {"role": "user", "content": "Compare these two assessments"}
+    ],
+    "expected_state": "comparison",
+    "min_assessments": 2,
+    "description": "Comparison of specific assessments"
+  },
+  {
+    "id": "off_topic_1",
+    "query": "What's the weather today?",
+    "expected_state": "refusal",
+    "expected_assessments_count": 0,
+    "description": "Off-topic query should be refused"
+  },
+  {
+    "id": "off_topic_2",
+    "query": "Tell me a joke",
+    "expected_state": "refusal",
+    "expected_assessments_count": 0,
+    "description": "Non-assessment query should be refused"
+  },
+  {
+    "id": "sales_role_1",
+    "query": "Assessment for sales representatives with customer service skills",
+    "expected_state": "recommendation",
+    "expected_constraints": {
+      "role": "sales",
+      "skills": ["customer service"]
+    },
+    "min_assessments": 1,
+    "description": "Sales role with specific skills"
+  },
+  {
+    "id": "technical_coding_1",
+    "query": "Need coding test for Python developers",
+    "expected_state": "recommendation",
+    "expected_constraints": {
+      "test_types": ["K"],
+      "skills": ["programming"]
+    },
+    "min_assessments": 1,
+    "description": "Technical coding assessment"
+  },
+  {
+    "id": "executive_level_1",
+    "query": "Assessment for executive leadership positions",
+    "expected_state": "recommendation",
+    "expected_constraints": {
+      "job_levels": ["Executive"],
+      "skills": ["leadership"]
+    },
+    "min_assessments": 1,
+    "description": "Executive level assessment"
+  },
+  {
+    "id": "multi_constraint_1",
+    "query": "Need remote adaptive cognitive assessment for graduates under 40 minutes",
+    "expected_state": "recommendation",
+    "expected_constraints": {
+      "job_levels": ["Graduate"],
+      "test_types": ["A"],
+      "remote_testing": true,
+      "adaptive_required": true,
+      "max_duration": 40
+    },
+    "min_assessments": 1,
+    "description": "Multiple constraints combined"
+  },
+  {
+    "id": "cumulative_constraints_1",
+    "conversation": [
+      {"role": "user", "content": "Need graduate assessment"},
+      {"role": "assistant", "content": "Here are graduate assessments..."},
+      {"role": "user", "content": "Make it under 30 minutes"},
+      {"role": "assistant", "content": "Here are shorter options..."},
+      {"role": "user", "content": "Also needs to be remote"}
+    ],
+    "expected_state": "refinement",
+    "expected_constraints": {
+      "job_levels": ["Graduate"],
+      "max_duration": 30,
+      "remote_testing": true
+    },
+    "description": "Cumulative constraint accumulation"
+  },
+  {
+    "id": "no_hallucination_1",
+    "query": "Show me all cognitive assessments",
+    "expected_state": "recommendation",
+    "max_assessments": 10,
+    "validate_urls": true,
+    "description": "All URLs must be from SHL catalog"
+  },
+  {
+    "id": "diversity_check_1",
+    "query": "Show me assessments for managers",
+    "expected_state": "recommendation",
+    "validate_diversity": true,
+    "description": "Results should have diverse test types"
+  }
+]
