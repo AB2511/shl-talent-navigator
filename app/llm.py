@@ -89,7 +89,7 @@ class LLMClient:
         max_tokens: int
     ) -> str:
         """Generate using Google Gemini API."""
-        url = f"https://generativelanguage.googleapis.com/v1/models/{self.model}:generateContent"
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{self.model}:generateContent"
         
         # Combine system prompt and user prompt
         full_prompt = f"{system_prompt}\n\n{prompt}" if system_prompt else prompt
